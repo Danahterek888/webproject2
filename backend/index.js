@@ -1,7 +1,7 @@
 require("dotenv").config();
-import cors from "cors";
-import mysql from "mysql";
-import express from "express";
+const cors = require("cors");
+const express = require("express");
+const mysql = require("mysql2");
 
 const app = express();
 
@@ -14,7 +14,6 @@ app.listen(5000, () => {
 });
 
 // Database connection
-const mysql = require("mysql2");
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -23,7 +22,7 @@ const db = mysql.createConnection({
 });
 
 // Test DB connection
-db.getConnection((err) => {
+db.connect((err) => {
   if (err) {
     console.error("Database connection failed:", err);
   } else {
@@ -82,7 +81,7 @@ app.get("/products/:id", (req, res) => {
 ---------------------------------------------------- */
 app.post("/products", (req, res) => {
   if (!req.body) {
-    return res.status(400).send("Request body is missing"); //if im trying to add empty input for frontend checking
+    return res.status(400).send("Request body is missing");
   }
 
   const { name, price, category, image_url } = req.body;
@@ -95,7 +94,7 @@ app.post("/products", (req, res) => {
     errors.push("Last name is required");
   }
   if (!category) {
-    errors.push("Phone is required"); //validate required feilds
+    errors.push("Phone is required");
   }
   if (errors.length > 0) {
     return res.status(400).json({ message: errors });
@@ -105,7 +104,7 @@ app.post("/products", (req, res) => {
 
   db.query(q, [name, price, category, image_url], (err, data) => {
     if (err) {
-      if (err.errno === 1062) { //check for duplicate entry errors
+      if (err.errno === 1062) {
         return res.status(400).json({ message: err.sqlMessage });
       }
       return res.status(500).json({ message: "Database error", error: err });
@@ -123,14 +122,14 @@ app.post("/products", (req, res) => {
 ---------------------------------------------------- */
 app.put("/products/:id", (req, res) => {
   if (!req.body) {
-    return res.status(400).send("Request body is missing"); //make sure that froentend sent data
+    return res.status(400).send("Request body is missing");
   }
 
-  const { id } = req.params; //comes from the URL (/products/:id)
-  const { name, price, category, image_url } = req.body; //come from the request body
+  const { id } = req.params;
+  const { name, price, category, image_url } = req.body;
 
   if (!id) {
-    return res.status(400).json({ message: "Product ID is required" }); //Ensures the client provided an ID.
+    return res.status(400).json({ message: "Product ID is required" });
   }
 
   if (isNaN(Number(id))) {
@@ -138,7 +137,7 @@ app.put("/products/:id", (req, res) => {
   }
 
   if (!name || !price || !category || !image_url) {
-    return res.status(400).json({ message: "All fields are required" }); //Makes sure all product fields are present before updating
+    return res.status(400).json({ message: "All fields are required" });
   }
 
   const q =
@@ -152,7 +151,7 @@ app.put("/products/:id", (req, res) => {
       return res.status(500).json({ message: "Database error", error: err });
     } else {
       if (data.affectedRows === 0) {
-        return res.status(404).json({ message: "Product not found" }); //to check if the product deos even exist before update
+        return res.status(404).json({ message: "Product not found" });
       }
       return res.status(200).json({ message: "Product updated successfully" });
     }
@@ -238,7 +237,7 @@ app.delete("/cart/:product_id", (req, res) => {
 ---------------------------------------------------- */
 app.post("/contactmessages", (req, res) => {
   if (!req.body) {
-    return res.status(400).send("Request body is missing"); //if im trying to add empty input for frontend checking
+    return res.status(400).send("Request body is missing");
   }
 
   const { name, email, message } = req.body;
@@ -251,7 +250,7 @@ app.post("/contactmessages", (req, res) => {
     errors.push("Email is required");
   }
   if (!message) {
-    errors.push("Message is required"); //validate required feilds
+    errors.push("Message is required");
   }
   if (errors.length > 0) {
     return res.status(400).json({ message: errors });
@@ -261,7 +260,7 @@ app.post("/contactmessages", (req, res) => {
 
   db.query(q, [name, email, message], (err, data) => {
     if (err) {
-      if (err.errno === 1062) { //check for duplicate entry errors
+      if (err.errno === 1062) {
         return res.status(400).json({ message: err.sqlMessage });
       }
       return res.status(500).json({ message: "Database error", error: err });
