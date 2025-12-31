@@ -1,3 +1,4 @@
+require("dotenv").config();
 import cors from "cors";
 import mysql from "mysql";
 import express from "express";
@@ -13,12 +14,12 @@ app.listen(5000, () => {
 });
 
 // Database connection
-const db = mysql.createPool({
-  port: 3306,
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "webproject",
+const mysql = require("mysql2");
+const db = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE
 });
 
 // Test DB connection
