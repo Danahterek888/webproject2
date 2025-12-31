@@ -7,7 +7,7 @@ export default function Products() {
   const [glasses, setGlasses] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/products")
+    fetch("${process.env.REACT_APP_BACKEND_URL}/products")
       .then((res) => res.json())
       .then((data) => {
         // Split products by category (assuming your DB has a 'category' column)
