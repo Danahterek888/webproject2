@@ -7,7 +7,7 @@ export default function Home() {
   const [featured, setFeatured] = useState([]);
 
   useEffect(() => {
-    fetch("${process.env.REACT_APP_BACKEND_URL}/products")
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/products`)
       .then((res) => res.json())
       .then((data) => {
         // Example: pick first 4 products as "featured"

@@ -8,7 +8,7 @@ const Cart = () => {
 
   // Fetch cart items from backend when component mounts
   useEffect(() => {
-    fetch("${process.env.REACT_APP_BACKEND_URL}/cart")
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/cart`)
       .then((res) => res.json())
       .then((data) => setCartItems(data))
       .catch((err) => console.error("Failed to fetch cart:", err));
@@ -32,7 +32,7 @@ const Cart = () => {
 
   const handleClear = async () => {
     try {
-      const res = await fetch("${process.env.REACT_APP_BACKEND_URL}/cart", {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/cart`, {
         method: "DELETE",
       });
       if (res.ok) {

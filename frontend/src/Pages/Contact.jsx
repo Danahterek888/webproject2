@@ -18,7 +18,7 @@ export default function Contact() {
     e.preventDefault();
 
     try {
-      const res = await fetch("${process.env.REACT_APP_BACKEND_URL}/contactmessages", {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/contactmessages`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
