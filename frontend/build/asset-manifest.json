@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.507c97b0.css",
+    "main.js": "/static/js/main.75ee62cf.js",
+    "static/js/787.28cb0dcd.chunk.js": "/static/js/787.28cb0dcd.chunk.js",
+    "static/media/heroo.png": "/static/media/heroo.950670543a967029e038.png",
+    "static/media/lentilogo.png": "/static/media/lentilogo.2110ab24b1b07c69341a.png",
+    "index.html": "/index.html",
+    "main.507c97b0.css.map": "/static/css/main.507c97b0.css.map",
+    "main.75ee62cf.js.map": "/static/js/main.75ee62cf.js.map",
+    "787.28cb0dcd.chunk.js.map": "/static/js/787.28cb0dcd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.507c97b0.css",
+    "static/js/main.75ee62cf.js"
+  ]
+}
